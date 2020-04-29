@@ -7,30 +7,32 @@ namespace AdapterExercise
 
     public class Square
     {
-      public int Side;
+        public int Side;
     }
 
     public interface IRectangle
     {
-      int Width { get; }
-      int Height { get; }
+        int Width { get; }
+        int Height { get; }
     }
-    
+
     public static class ExtensionMethods
     {
-      public static int Area(this IRectangle rc)
-      {
-        return rc.Width * rc.Height;
-      }
+        public static int Area(this IRectangle rc)
+        {
+            return rc.Width * rc.Height;
+        }
     }
 
     public class SquareToRectangleAdapter : IRectangle
     {
-      public SquareToRectangleAdapter(Square square)
-      {
-        // todo
-      }
-      // todo
+        private int Side;
+        public SquareToRectangleAdapter(Square square)
+        {
+            this.Side = square.Side;
+        }
+        public int Width => Side;
+        public int Height => Side;
     }
 
     class Program
@@ -38,7 +40,8 @@ namespace AdapterExercise
         static void Main(string[] args)
         {
             Square s = new Square { Side = 10 };
-            Console.WriteLine(s.Area());
+            SquareToRectangleAdapter adapter = new SquareToRectangleAdapter(s);
+            Console.WriteLine(adapter.Area());
         }
     }
 }
